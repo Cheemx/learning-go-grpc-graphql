@@ -124,3 +124,19 @@ func (p *BrandRepo) DeleteOne(id uint) (bool, error) {
 	p.saveToFileStorage()
 	return false, fmt.Errorf("key '%d' not found", id)
 }
+
+func ToProtoBrand(b entities.Brand) *golang_protobuf_brand.ProtoBrandRepo_ProtoBrand {
+	return &golang_protobuf_brand.ProtoBrandRepo_ProtoBrand{
+		ID:   uint64(b.ID),
+		Name: b.Name,
+		Year: uint32(b.Year),
+	}
+}
+
+func ToBrand(b *golang_protobuf_brand.ProtoBrandRepo_ProtoBrand) entities.Brand {
+	return entities.Brand{
+		ID:   uint(b.ID),
+		Name: b.Name,
+		Year: uint(b.Year),
+	}
+}

@@ -9,6 +9,8 @@ package golang_protobuf_brand
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
+	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -65,6 +67,60 @@ func (x *ProtoBrandRepo) GetBrands() []*ProtoBrandRepo_ProtoBrand {
 	return nil
 }
 
+// RPC operation can only have one request parameter according to specification
+// so the workaraound is necessary
+type UpdateRequest struct {
+	state         protoimpl.MessageState     `protogen:"open.v1"`
+	ID            *wrapperspb.Int64Value     `protobuf:"bytes,1,opt,name=ID,proto3" json:"ID,omitempty"`
+	Brand         *ProtoBrandRepo_ProtoBrand `protobuf:"bytes,2,opt,name=Brand,proto3" json:"Brand,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateRequest) Reset() {
+	*x = UpdateRequest{}
+	mi := &file_protobuf_brand_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateRequest) ProtoMessage() {}
+
+func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_protobuf_brand_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateRequest.ProtoReflect.Descriptor instead.
+func (*UpdateRequest) Descriptor() ([]byte, []int) {
+	return file_protobuf_brand_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *UpdateRequest) GetID() *wrapperspb.Int64Value {
+	if x != nil {
+		return x.ID
+	}
+	return nil
+}
+
+func (x *UpdateRequest) GetBrand() *ProtoBrandRepo_ProtoBrand {
+	if x != nil {
+		return x.Brand
+	}
+	return nil
+}
+
 type ProtoBrandRepo_ProtoBrand struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ID            uint64                 `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
@@ -76,7 +132,7 @@ type ProtoBrandRepo_ProtoBrand struct {
 
 func (x *ProtoBrandRepo_ProtoBrand) Reset() {
 	*x = ProtoBrandRepo_ProtoBrand{}
-	mi := &file_protobuf_brand_proto_msgTypes[1]
+	mi := &file_protobuf_brand_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -88,7 +144,7 @@ func (x *ProtoBrandRepo_ProtoBrand) String() string {
 func (*ProtoBrandRepo_ProtoBrand) ProtoMessage() {}
 
 func (x *ProtoBrandRepo_ProtoBrand) ProtoReflect() protoreflect.Message {
-	mi := &file_protobuf_brand_proto_msgTypes[1]
+	mi := &file_protobuf_brand_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -129,14 +185,23 @@ var File_protobuf_brand_proto protoreflect.FileDescriptor
 
 const file_protobuf_brand_proto_rawDesc = "" +
 	"\n" +
-	"\x14protobuf/brand.proto\x12\x15golang_protobuf_brand\"\xa0\x01\n" +
+	"\x14protobuf/brand.proto\x12\x15golang_protobuf_brand\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\xa0\x01\n" +
 	"\x0eProtoBrandRepo\x12H\n" +
 	"\x06brands\x18\x01 \x03(\v20.golang_protobuf_brand.ProtoBrandRepo.ProtoBrandR\x06brands\x1aD\n" +
 	"\n" +
 	"ProtoBrand\x12\x0e\n" +
 	"\x02ID\x18\x01 \x01(\x04R\x02ID\x12\x12\n" +
 	"\x04Name\x18\x02 \x01(\tR\x04Name\x12\x12\n" +
-	"\x04Year\x18\x03 \x01(\rR\x04YearB\x18Z\x16/golang_protobuf_brandb\x06proto3"
+	"\x04Year\x18\x03 \x01(\rR\x04Year\"\x84\x01\n" +
+	"\rUpdateRequest\x12+\n" +
+	"\x02ID\x18\x01 \x01(\v2\x1b.google.protobuf.Int64ValueR\x02ID\x12F\n" +
+	"\x05Brand\x18\x02 \x01(\v20.golang_protobuf_brand.ProtoBrandRepo.ProtoBrandR\x05Brand2\xc9\x03\n" +
+	"\x04CRUD\x12l\n" +
+	"\x06Create\x120.golang_protobuf_brand.ProtoBrandRepo.ProtoBrand\x1a0.golang_protobuf_brand.ProtoBrandRepo.ProtoBrand\x12U\n" +
+	"\aGetList\x12\x16.google.protobuf.Empty\x1a0.golang_protobuf_brand.ProtoBrandRepo.ProtoBrand0\x01\x12W\n" +
+	"\x06GetOne\x12\x1b.google.protobuf.Int64Value\x1a0.golang_protobuf_brand.ProtoBrandRepo.ProtoBrand\x12`\n" +
+	"\x06Update\x12$.golang_protobuf_brand.UpdateRequest\x1a0.golang_protobuf_brand.ProtoBrandRepo.ProtoBrand\x12A\n" +
+	"\x06Delete\x12\x1b.google.protobuf.Int64Value\x1a\x1a.google.protobuf.BoolValueB\x18Z\x16/golang_protobuf_brandb\x06proto3"
 
 var (
 	file_protobuf_brand_proto_rawDescOnce sync.Once
@@ -150,18 +215,34 @@ func file_protobuf_brand_proto_rawDescGZIP() []byte {
 	return file_protobuf_brand_proto_rawDescData
 }
 
-var file_protobuf_brand_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_protobuf_brand_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_protobuf_brand_proto_goTypes = []any{
 	(*ProtoBrandRepo)(nil),            // 0: golang_protobuf_brand.ProtoBrandRepo
-	(*ProtoBrandRepo_ProtoBrand)(nil), // 1: golang_protobuf_brand.ProtoBrandRepo.ProtoBrand
+	(*UpdateRequest)(nil),             // 1: golang_protobuf_brand.UpdateRequest
+	(*ProtoBrandRepo_ProtoBrand)(nil), // 2: golang_protobuf_brand.ProtoBrandRepo.ProtoBrand
+	(*wrapperspb.Int64Value)(nil),     // 3: google.protobuf.Int64Value
+	(*emptypb.Empty)(nil),             // 4: google.protobuf.Empty
+	(*wrapperspb.BoolValue)(nil),      // 5: google.protobuf.BoolValue
 }
 var file_protobuf_brand_proto_depIdxs = []int32{
-	1, // 0: golang_protobuf_brand.ProtoBrandRepo.brands:type_name -> golang_protobuf_brand.ProtoBrandRepo.ProtoBrand
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	2, // 0: golang_protobuf_brand.ProtoBrandRepo.brands:type_name -> golang_protobuf_brand.ProtoBrandRepo.ProtoBrand
+	3, // 1: golang_protobuf_brand.UpdateRequest.ID:type_name -> google.protobuf.Int64Value
+	2, // 2: golang_protobuf_brand.UpdateRequest.Brand:type_name -> golang_protobuf_brand.ProtoBrandRepo.ProtoBrand
+	2, // 3: golang_protobuf_brand.CRUD.Create:input_type -> golang_protobuf_brand.ProtoBrandRepo.ProtoBrand
+	4, // 4: golang_protobuf_brand.CRUD.GetList:input_type -> google.protobuf.Empty
+	3, // 5: golang_protobuf_brand.CRUD.GetOne:input_type -> google.protobuf.Int64Value
+	1, // 6: golang_protobuf_brand.CRUD.Update:input_type -> golang_protobuf_brand.UpdateRequest
+	3, // 7: golang_protobuf_brand.CRUD.Delete:input_type -> google.protobuf.Int64Value
+	2, // 8: golang_protobuf_brand.CRUD.Create:output_type -> golang_protobuf_brand.ProtoBrandRepo.ProtoBrand
+	2, // 9: golang_protobuf_brand.CRUD.GetList:output_type -> golang_protobuf_brand.ProtoBrandRepo.ProtoBrand
+	2, // 10: golang_protobuf_brand.CRUD.GetOne:output_type -> golang_protobuf_brand.ProtoBrandRepo.ProtoBrand
+	2, // 11: golang_protobuf_brand.CRUD.Update:output_type -> golang_protobuf_brand.ProtoBrandRepo.ProtoBrand
+	5, // 12: golang_protobuf_brand.CRUD.Delete:output_type -> google.protobuf.BoolValue
+	8, // [8:13] is the sub-list for method output_type
+	3, // [3:8] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_protobuf_brand_proto_init() }
@@ -175,9 +256,9 @@ func file_protobuf_brand_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_protobuf_brand_proto_rawDesc), len(file_protobuf_brand_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   3,
 			NumExtensions: 0,
-			NumServices:   0,
+			NumServices:   1,
 		},
 		GoTypes:           file_protobuf_brand_proto_goTypes,
 		DependencyIndexes: file_protobuf_brand_proto_depIdxs,
