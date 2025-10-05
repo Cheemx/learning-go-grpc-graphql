@@ -17,8 +17,8 @@ POST http://{{host}}/api/brands HTTP/1.1
 content-type: application/json
 
 {
-    "name": "Dunlop",
-    "year": 1887
+    "name": "ritika",
+    "year": 2003
 }
 
 ###
@@ -35,5 +35,5 @@ content-type: application/json
 ###
 
 // Delete Brand
-DELETE http://{{host}}/api/brands/1 HTTP/1.1
+DELETE http://{{host}}/api/brands/5 HTTP/1.1
 content-type: application/json

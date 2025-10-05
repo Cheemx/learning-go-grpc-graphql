@@ -1,19 +1,22 @@
 package main
 
 import (
-	"fmt"
+	"context"
 	"log"
 	"net"
 	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/Cheemx/learning-go-grpc-graphql/internal/config"
-	"github.com/Cheemx/learning-go-grpc-graphql/internal/controller"
 	"github.com/Cheemx/learning-go-grpc-graphql/internal/entities"
 	"github.com/Cheemx/learning-go-grpc-graphql/internal/repo"
 	"github.com/Cheemx/learning-go-grpc-graphql/protobuf/golang_protobuf_brand"
 	"github.com/Cheemx/learning-go-grpc-graphql/protobuf/server"
-	"github.com/gorilla/mux"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 func main() {
@@ -24,27 +27,31 @@ func main() {
 
 	var brandRepo repo.GenericRepo[entities.Brand] = repo.NewBrandRepo()
 
-	router := mux.NewRouter()
-	RegisterProductRoutes(router)
-	RegisterBrandRoutes(router)
-
 	log.Printf("Starting Server on port %s\n", cfg.Port)
 	go StartRPCServer(&brandRepo)
-	log.Fatal(http.ListenAndServe(":"+cfg.Port, router))
+
+	go StartRPCGatewayServer()
+
+	stopChan := make(chan os.Signal, 1)
+	signal.Notify(stopChan, os.Interrupt, syscall.SIGTERM)
+	<-stopChan
+	log.Println("Termination signal received. Exiting...")
 }
 
-func RegisterProductRoutes(router *mux.Router) {
-	var muxBase = "/api/products"
-	router.HandleFunc(muxBase, controller.GetProducts).Methods("GET")
-	router.HandleFunc(fmt.Sprintf("%s/{id}", muxBase), controller.GetProductById).Methods("GET")
-	router.HandleFunc(muxBase, controller.CreateProduct).Methods("POST")
-	router.HandleFunc(fmt.Sprintf("%s/{id}", muxBase), controller.UpdateProduct).Methods("PUT")
-	router.HandleFunc(fmt.Sprintf("%s/{id}", muxBase), controller.DeleteProduct).Methods("DELETE")
-}
+func StartRPCGatewayServer() {
+	gwmux := runtime.NewServeMux()
+	err := golang_protobuf_brand.RegisterCRUDHandlerFromEndpoint(context.Background(), gwmux, ":6002", []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())})
+	if err != nil {
+		log.Fatal(err)
+	}
 
-func RegisterBrandRoutes(router *mux.Router) {
-	var brandRepo repo.GenericRepo[entities.Brand] = repo.NewBrandRepo()
-	NewGenericRouter[entities.Brand, *repo.BrandRepo]("/api/brands", router, &brandRepo)
+	gwServer := &http.Server{
+		Addr:    ":6000",
+		Handler: gwmux,
+	}
+
+	log.Println("Serving gRPC-Gateway pn http://localhost:6002")
+	log.Fatalln(gwServer.ListenAndServe())
 }
 
 func StartRPCServer(brandRepo *repo.GenericRepo[entities.Brand]) {

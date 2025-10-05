@@ -7,6 +7,7 @@
 package golang_protobuf_brand
 
 import (
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
@@ -124,8 +125,8 @@ func (x *UpdateRequest) GetBrand() *ProtoBrandRepo_ProtoBrand {
 type ProtoBrandRepo_ProtoBrand struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ID            uint64                 `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=Name,proto3" json:"Name,omitempty"`
-	Year          uint32                 `protobuf:"varint,3,opt,name=Year,proto3" json:"Year,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=Name,json=name,proto3" json:"Name,omitempty"`
+	Year          uint32                 `protobuf:"varint,3,opt,name=Year,json=year,proto3" json:"Year,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -185,23 +186,23 @@ var File_protobuf_brand_proto protoreflect.FileDescriptor
 
 const file_protobuf_brand_proto_rawDesc = "" +
 	"\n" +
-	"\x14protobuf/brand.proto\x12\x15golang_protobuf_brand\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\xa0\x01\n" +
+	"\x14protobuf/brand.proto\x12\x15golang_protobuf_brand\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\"\xac\x01\n" +
 	"\x0eProtoBrandRepo\x12H\n" +
-	"\x06brands\x18\x01 \x03(\v20.golang_protobuf_brand.ProtoBrandRepo.ProtoBrandR\x06brands\x1aD\n" +
+	"\x06brands\x18\x01 \x03(\v20.golang_protobuf_brand.ProtoBrandRepo.ProtoBrandR\x06brands\x1aP\n" +
 	"\n" +
 	"ProtoBrand\x12\x0e\n" +
-	"\x02ID\x18\x01 \x01(\x04R\x02ID\x12\x12\n" +
-	"\x04Name\x18\x02 \x01(\tR\x04Name\x12\x12\n" +
-	"\x04Year\x18\x03 \x01(\rR\x04Year\"\x84\x01\n" +
+	"\x02ID\x18\x01 \x01(\x04R\x02ID\x12\x18\n" +
+	"\x04Name\x18\x02 \x01(\tB\x04\xe2A\x01\x02R\x04name\x12\x18\n" +
+	"\x04Year\x18\x03 \x01(\rB\x04\xe2A\x01\x02R\x04year\"\x84\x01\n" +
 	"\rUpdateRequest\x12+\n" +
 	"\x02ID\x18\x01 \x01(\v2\x1b.google.protobuf.Int64ValueR\x02ID\x12F\n" +
-	"\x05Brand\x18\x02 \x01(\v20.golang_protobuf_brand.ProtoBrandRepo.ProtoBrandR\x05Brand2\xc9\x03\n" +
-	"\x04CRUD\x12l\n" +
-	"\x06Create\x120.golang_protobuf_brand.ProtoBrandRepo.ProtoBrand\x1a0.golang_protobuf_brand.ProtoBrandRepo.ProtoBrand\x12U\n" +
-	"\aGetList\x12\x16.google.protobuf.Empty\x1a0.golang_protobuf_brand.ProtoBrandRepo.ProtoBrand0\x01\x12W\n" +
-	"\x06GetOne\x12\x1b.google.protobuf.Int64Value\x1a0.golang_protobuf_brand.ProtoBrandRepo.ProtoBrand\x12`\n" +
-	"\x06Update\x12$.golang_protobuf_brand.UpdateRequest\x1a0.golang_protobuf_brand.ProtoBrandRepo.ProtoBrand\x12A\n" +
-	"\x06Delete\x12\x1b.google.protobuf.Int64Value\x1a\x1a.google.protobuf.BoolValueB\x18Z\x16/golang_protobuf_brandb\x06proto3"
+	"\x05Brand\x18\x02 \x01(\v20.golang_protobuf_brand.ProtoBrandRepo.ProtoBrandR\x05Brand2\xce\x04\n" +
+	"\x04CRUD\x12\x84\x01\n" +
+	"\x06Create\x120.golang_protobuf_brand.ProtoBrandRepo.ProtoBrand\x1a0.golang_protobuf_brand.ProtoBrandRepo.ProtoBrand\"\x16\x82\xd3\xe4\x93\x02\x10:\x01*\"\v/api/brands\x12j\n" +
+	"\aGetList\x12\x16.google.protobuf.Empty\x1a0.golang_protobuf_brand.ProtoBrandRepo.ProtoBrand\"\x13\x82\xd3\xe4\x93\x02\r\x12\v/api/brands0\x01\x12t\n" +
+	"\x06GetOne\x12\x1b.google.protobuf.Int64Value\x1a0.golang_protobuf_brand.ProtoBrandRepo.ProtoBrand\"\x1b\x82\xd3\xe4\x93\x02\x15\x12\x13/api/brands/{value}\x12}\n" +
+	"\x06Update\x12$.golang_protobuf_brand.UpdateRequest\x1a0.golang_protobuf_brand.ProtoBrandRepo.ProtoBrand\"\x1b\x82\xd3\xe4\x93\x02\x15:\x01*\x1a\x10/api/brands/{ID}\x12^\n" +
+	"\x06Delete\x12\x1b.google.protobuf.Int64Value\x1a\x1a.google.protobuf.BoolValue\"\x1b\x82\xd3\xe4\x93\x02\x15*\x13/api/brands/{value}B\x18Z\x16/golang_protobuf_brandb\x06proto3"
 
 var (
 	file_protobuf_brand_proto_rawDescOnce sync.Once
